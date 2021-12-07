@@ -2,55 +2,42 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-
+    <meta charset="UTF-8">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
-    <script src="../node_modules/validate.js/validate.js"></script>
-    <link rel="stylesheet" href="../css/login.css">
+    <script src="../js/validate.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="container">
-        <h3>Login</h3>
-        <div class="col-lg-8 m-auto d-block">
-            <form id="main" class="form-horizontal" action="/example" method="post" novalidate>
-                <div class="form-group">
-                    <label for="use">Username</label>
-                    <input type="text" name="username" id="usernames" class="form-control" placeholder="Username">
-                    <div class="col-sm-5 messages"></div>
-                </div>
-                <!-- 
-                <div class="form-group">
-                    <label for="user">Email:</label>
-                    <input type="email" name="email" id="email" class="form-control">
-                    <div class="col-sm-5 messages"></div>
-                </div> -->
+    <form class="form-login" id="main" action="/example" method="post" novalidate>
+        <div class="container">
+            <h3 class="title">Login</h3>
 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" name="password" id="password" class="form-control">
-                    <div class="col-sm-5 messages"></div>
+            <div class="form-group">
+                <label for="use">Username</label>
+                <input type="text" name="username" id="usernames" class="form-control" placeholder="Username">
+                <div class="messages"></div>
+            </div>
 
-                </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" class="form-control">
+                <div class="col-sm-5 messages"></div>
+            </div>
 
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary login_submit">Submit</button>
-                    </div>
-                </div>
-            </form>
-
+            <div>
+                <button type="submit" class="btn-submit">Submit</button>
+            </div>
+            <div class="signup">
+                <p>Chưa có tài khoản? <a href="register.html">Sign up</a>.</p>
+            </div>
         </div>
-    </div>
+    </form>
+
     <script>
         (function() {
-            // Before using it we must add the parse and format functions
-            // Here is a sample implementation using moment.js
             validate.extend(validate.validators.datetime, {
-                // The value is guaranteed not to be null or undefined but otherwise it
-                // could be anything.
                 parse: function(value, options) {
                     return +moment.utc(value);
                 },
