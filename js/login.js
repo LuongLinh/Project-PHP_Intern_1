@@ -23,7 +23,7 @@
     var inputs = document.querySelectorAll("input");
     for (var i = 0; i < inputs.length; ++i) {
         inputs.item(i).addEventListener("change", function(event) {
-            var errors = validate(inputs, constraints) || {};
+            var errors = validate(form, constraints) || {};
             showErrorsForInput(this, errors[this.name]);
         });
     }
@@ -65,18 +65,18 @@
         var block = document.createElement("p");
         block.classList.add("help-block");
         block.classList.add("error");
+        block.classList.add("text-danger");
         block.innerText = error;
         messages.appendChild(block);
     }
 
     var form = document.getElementById("main");
-    console.log(form, 123);
     form.addEventListener("submit", function(event) {
         event.preventDefault();
         handleFormSubmit(form);
     });
 
-    function handleFormSubmit(form, input) {
+    function handleFormSubmit(form) {
         var errors = validate(form, constraints);
         showErrors(form, errors || {});
         if (!errors) {
