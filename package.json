@@ -1,6 +1,5 @@
 {
-  "dependencies": {
-    "validate.js": "^0.13.1",
-    "validator": "^13.7.0"
-  }
+    "dependencies": {
+        "validate.js": "^0.13.1"
+    }
 }
