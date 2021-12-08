@@ -1,5 +1,5 @@
 (function() {
-    constraints = {
+    const constraints = {
         username: {
             presence: true,
             length: {
@@ -20,16 +20,16 @@
         },
     };
 
-    var inputs = document.querySelectorAll("input");
-    for (var i = 0; i < inputs.length; ++i) {
+    const inputs = document.querySelectorAll("input");
+    for (let i = 0; i < inputs.length; ++i) {
         inputs.item(i).addEventListener("change", function(event) {
-            var errors = validate(form, constraints) || {};
+            const errors = validate(form, constraints) || {};
             showErrorsForInput(this, errors[this.name]);
         });
     }
 
     function showErrorsForInput(input, errors) {
-        var formGroup = closestParent(input.parentNode, "form-group"),
+        const formGroup = closestParent(input.parentNode, "form-group"),
             messages = formGroup.querySelector(".messages");
         resetFormGroup(formGroup);
         if (errors) {
@@ -62,7 +62,7 @@
     }
 
     function addError(messages, error) {
-        var block = document.createElement("p");
+        const block = document.createElement("p");
         block.classList.add("help-block");
         block.classList.add("error");
         block.classList.add("text-danger");
@@ -70,14 +70,14 @@
         messages.appendChild(block);
     }
 
-    var form = document.getElementById("main");
+    const form = document.getElementById("main");
     form.addEventListener("submit", function(event) {
         event.preventDefault();
         handleFormSubmit(form);
     });
 
     function handleFormSubmit(form) {
-        var errors = validate(form, constraints);
+        const errors = validate(form, constraints);
         showErrors(form, errors || {});
         if (!errors) {
             showSuccess();
