@@ -1,8 +1,20 @@
 (function() {
     var constraints = {
+        username: {
+            presence: true,
+            length: {
+                minimum: 3,
+                maximum: 20
+            },
+            format: {
+                pattern: "[a-z0-9]+",
+                flags: "i",
+                message: "can only contain a-z and 0-9"
+            }
+        },
         email: {
             presence: true,
-            email: true
+            email: true,
         },
         password: {
             presence: true,
@@ -17,26 +29,14 @@
                 message: "^The passwords does not match"
             }
         },
-        username: {
-            presence: true,
-            length: {
-                minimum: 3,
-                maximum: 20
-            },
-            format: {
-                pattern: "[a-z0-9]+",
-                flags: "i",
-                message: "can only contain a-z and 0-9"
-            }
-        }
     };
 
     var inputs = document.querySelectorAll("input");
-    for (var i = 0; i < inputs.length; i++) {
+    for (var i = 0; i < inputs.length; ++i) {
         inputs.item(i).addEventListener("change", function(event) {
-            var errors = validate(inputs, constraints) || {};
+            var errors = validate(form, constraints) || {};
             showErrorsForInput(this, errors[this.name]);
-        })
+        });
     }
 
     function showErrorsForInput(input, errors) {
@@ -76,26 +76,18 @@
         var block = document.createElement("p");
         block.classList.add("help-block");
         block.classList.add("error");
+        block.classList.add("text-danger");
         block.innerText = error;
         messages.appendChild(block);
     }
 
-
-    var inputs = document.querySelectorAll("input, textarea, select")
-    for (var i = 0; i < inputs.length; ++i) {
-        inputs.item(i).addEventListener("change", function(ev) {
-            var errors = validate(form, constraints) || {};
-            showErrorsForInput(this, errors[this.name])
-        });
-    }
-
-    var form = document.querySelector("form#form-login");
+    var form = document.getElementById("main");
     form.addEventListener("submit", function(event) {
         event.preventDefault();
         handleFormSubmit(form);
-    })
+    });
 
-    function handleFormSubmit(form, input) {
+    function handleFormSubmit(form) {
         var errors = validate(form, constraints);
         showErrors(form, errors || {});
         if (!errors) {
@@ -112,4 +104,4 @@
     function showSuccess() {
         alert("Success!");
     }
-})
+})();
