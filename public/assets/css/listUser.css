@@ -1,0 +1,58 @@
+body {
+    text-align: center;
+    background-color: #f6f6f6;
+    font-family: monospace;
+}
+
+table.list-user {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid #ddd;
+    font-size: 12px;
+    border-collapse: collapse;
+}
+
+td,
+th {
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th,
+td {
+    padding: 10px;
+}
+
+.update-user {
+    background-color: rgb(60, 153, 60);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.del-user {
+    background-color: rgb(230, 10, 10);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.link {
+    color: white;
+    text-decoration: none;
+}

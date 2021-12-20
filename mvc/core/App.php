@@ -1,5 +1,5 @@
 <?php
-class App extends Controller
+class App
 {
     private $_controller;
     private $_action;
@@ -9,7 +9,7 @@ class App extends Controller
     function __construct()
     {
         
-        global $routes;
+        global $routes, $config;
 
         $this->_routes = new Route();
 
@@ -91,6 +91,7 @@ class App extends Controller
         //xử lý action
         if (!empty($urlArr[1])) {
             $this->_action = $urlArr[1];
+            unset($urlArr[1]);
         }
 
         //xử lý params

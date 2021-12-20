@@ -1,27 +1,17 @@
 <?php
-class Home extends Controller{
-
-    public function login()
-    {
-        $request = new Request();
-        $data = $request->getFields();
-        $this->render("login");
-    }
-
+class Register extends Controller
+{
     public function register()
     {
         $request = new Request();
         $data = $request->getFields();
         $this->render("register");
     }
-    
-    public function testHome() {
-        echo "test home";
-    }
+
     public function post_register()
     {
         $request = new Request();
-
+        $userData = $request->getFields();
         $request->rules([
             "username" => "required|min:3|max:30",
             "email" => "required|email|min:5",
@@ -47,34 +37,14 @@ class Home extends Controller{
         if (!$validate) {
             $this->data['errors'] = $request->errors();
             $this->data["msg"] = "Something wrong! Please check again!";
-        } 
-        
-        $this->render("register", $this->data);
-    }
-
-    public function post_login()
-    {
-        $request = new Request();
-
-        $request->rules([
-            "username" => "required|min:3|max:30",
-            "password" => "required|min:6",
-        ]);
-
-        $request->message([
-            "username.required" => "Username can't be blank",
-            "username.min" => "Username must be at least 3 characters long",
-            "username.max" => "username must be less than 30 characters",
-            
-            "password.required" => "Password cant be blank",
-            "password.min" => "Password must be at least than 6 characters",
-        ]);
-        $validate = $request->validate();
-
-        if (!$validate) {
-            $this->data['errors'] = $request->errors();
-            $this->data["msg"] = "Login fail! Please check again!";
         }
-        $this->render("login", $this->data);
+
+        if (!empty($this->data["errors"])) {
+            return $this->render("register", $this->data);
+        } else {
+            // echo "success!";
+            $users = $this->model("UserModel");
+            return $users->addUser($userData);
+        }
     }
 }
