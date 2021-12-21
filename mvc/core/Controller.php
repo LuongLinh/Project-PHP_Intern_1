@@ -1,5 +1,5 @@
 <?php
-class Controller
+class Controller extends Request
 {
     public $data;
     public function render($view, $data = [])
@@ -23,4 +23,15 @@ class Controller
         }
         return false;
     }
+
+    // public function getFields()
+    // {
+    //     return $this->getFields();
+    // }
+    // public function getRule() {
+    //     return $this->rules();
+    // }
+    // public function getMessage() {
+    //     return $this->getMessage();
+    // }
 }

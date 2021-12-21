@@ -24,8 +24,8 @@ class App
 
     function getUrl()
     {
-        if (!empty($_SERVER["PATH_INFO"])) {
-            $url = $_SERVER["PATH_INFO"];
+        if (!empty($_SERVER["REQUEST_URI"])) {
+            $url = $_SERVER["REQUEST_URI"];
         } else {
             $url = "/";
         }

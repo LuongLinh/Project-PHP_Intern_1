@@ -16,9 +16,11 @@ if (!empty($config["database"])) {
     $db_config = array_filter($config["database"]);
 
     if (!empty($db_config)) {
-        require_once "../mvc/core/Connection.php";       
+        require_once "../mvc/core/Connection.php";
     }
 }
+require_once "../mvc/core/Request.php";
+require_once "../mvc/core/LoginRequest.php";
+require_once "../mvc/core/RegisterRequest.php";
 
 require_once "../mvc/core/Controller.php";
-require_once "../mvc/core/Request.php";

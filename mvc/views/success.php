@@ -1,1 +1,1 @@
-<h1>posted comment successful!!!</h1>
+<h3 style="color: green; text-align: center;">success</h3>

@@ -1,9 +1,9 @@
 <?php
-$routes["default_controller"] = "register";
-$routes["register"] = "register/register";
-$routes["post-register"] = "register/post_register";
-$routes["login"] = "login/login";
-$routes["post-login"] = "login/post_login";
+$routes["default_controller"] = "userController";
+$routes["register"] = "usercontroller/register";
+$routes["post-register"] = "usercontroller/postRegister";
+$routes["login"] = "usercontroller/login";
+$routes["post-login"] = "UserController/postLogin";
 //user
 $routes["list-user"] = "usercontroller/getListUser";
 $routes["delete-user/(.+)"] = "usercontroller/deleteUser/$1";

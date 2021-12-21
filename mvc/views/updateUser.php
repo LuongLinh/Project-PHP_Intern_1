@@ -9,14 +9,17 @@
 </head>
 
 <body>
-    <form class="form-login" id="main" action="post-login" method="post" novalidate>
+
+    <?php
+    echo "<pre>";
+    print_r($data);
+    echo "</pre>";
+    ?>
+    <!-- 
+
+    <form class="form-login" id="main" action="/update-user/" method="post" novalidate>
         <div>
-            <?php echo !empty($data["msgLoginToPost"]) ? "<h3 style=\"color: red; text-align: center;\">" . $msgLoginToPost . "</h3>" : false; ?>
-
-            <?php echo !empty($data["loginFail"]) ? "<h3 style=\"color: red; text-align: center;\">" . $loginFail . "</h3>" : false; ?>
-            <?php echo !empty($errors) ? "<h3 style=\"color: red; text-align: center;\">" . $msg . "</h3>" : false; ?>
-            <?php echo !empty($data["success"]) ? "<h3 style=\"color: green; text-align: center;\">" . $success . "</h3>" : false; ?>
-
+          
             <h3 class="title">LOGIN</h3>
             <div class="form-group">
                 <label for="use" class="form-label">Username</label>
@@ -31,11 +34,7 @@
                 <?php echo (!empty($errors) && array_key_exists("password", $errors)) ? "<div class=\"messages\">" . $errors["password"] . "</div>" : false; ?>
                 <div class="messages"></div>
             </div>
-            <div class="form-group">
-                <p>
-                    <input type="checkbox" class="remember"> Remember me?
-                </p>
-            </div>
+
             <div>
                 <button type="submit" class="btn-submit">Submit</button>
             </div>
@@ -43,7 +42,7 @@
                 <p class="signup">Already have account? <a href="/register">Sign up</a>.</p>
 
             </div>
-    </form>
+    </form> -->
 
     <script src="../node_modules/validate.js/validate.js"></script>
     <script src="../js/login.js"></script>

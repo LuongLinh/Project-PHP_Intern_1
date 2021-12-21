@@ -11,6 +11,7 @@
 <body>
     <div class="container">
         <h2>Post Detail</h2>
+        
         <?php
         foreach ($data["postDetail"] as $key => $value) {
             $key = array_filter($data["postDetail"]);
@@ -30,7 +31,6 @@
                 echo "<p>Comment</p>";
                 foreach ($data["postDetail"] as $key => $value) {
                     echo $value["message"];
-                   
                 }
                 ?>
             </div>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 class Connection
 {
     private static $instance = null, $conn = null;
@@ -23,11 +24,8 @@ class Connection
 
     public static function getInstance($config)
     {
-        if (self::$instance == null) {
-             
-            self::$instance = new Connection($config);
-            self::$instance = self::$conn;
-        }
+        self::$instance = new Connection($config);
+        self::$instance = self::$conn;
         return self::$instance;
     }
 }

@@ -3,8 +3,7 @@ class CommentController extends Controller
 {
     function addComment($userId, $postId)
     {
-        $request = new Request();
-        $commentData = $request->getFields();
+        $commentData = $this->getFields();
 
         $comments = $this->model("CommentModel");
         $comments->addComment($commentData, $userId, $postId);
@@ -12,9 +11,7 @@ class CommentController extends Controller
     }
 
     function getCommentUser() {
-        $request = new Request();
-        $commentData = $request->getFields();
-
+        $commentData = $this->getFields();
         $comments = $this->model("CommentModel");
         $comments->getCommentUser();
         

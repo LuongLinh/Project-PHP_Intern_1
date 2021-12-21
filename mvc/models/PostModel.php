@@ -11,7 +11,7 @@ class PostModel
 
     public function addPost($postData, $userId)
     {
-        $sql = "INSERT INTO `posts` (`id`, `title`, `content`, `timestamp`, `user_author_id`) VALUES (NULL, '" . $postData["title"] . "', '" . $postData["content"] . "', NULL, '".$userId."');";
+        $sql = "INSERT INTO `posts` (`id`, `title`, `content`, `timestamp`, `user_author_id`) VALUES (NULL, '" . $postData["title"] . "', '" . $postData["content"] . "', NULL, '" . $userId . "');";
         $statement = $this->__conn->prepare($sql);
         $result = $statement->execute();
         return $result;
@@ -30,18 +30,18 @@ class PostModel
 
     public function getPostById($id)
     {
-        $sql = "SELECT `posts`.`id`, `title`, `content`, `message` FROM `posts` LEFT JOIN `comments` ON `posts`.`id` = `comments`.`post_id` WHERE `posts`.`id` = '".$id."';";
+        $sql = "SELECT `posts`.`id`, `title`, `content`, `message` FROM `posts`, `comments` WHERE `posts`.`id` = `comments`.`post_id` AND `posts`.`id` = '" . $id . "';";
         $statement = $this->__conn->prepare($sql);
         $statement->setFetchMode(PDO::FETCH_ASSOC);
-        $statement->execute([$id]);
+        $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
 
     function updatePost($dataUpdate, $id)
     {
-        $dataUpdate["post-excerpt"] = substr($dataUpdate["content"], 0 , 30);
-        $sql = "UPDATE `posts` SET `title`='" . $dataUpdate["title"] . "', `content`='" . $dataUpdate["content"] . "', `post-excerpt`='" . $dataUpdate["post-excerpt"] . "' WHERE `posts`.`id` = '". $id ."';";
+        $dataUpdate["post-excerpt"] = substr($dataUpdate["content"], 0, 30);
+        $sql = "UPDATE `posts` SET `title`='" . $dataUpdate["title"] . "', `content`='" . $dataUpdate["content"] . "', `post-excerpt`='" . $dataUpdate["post-excerpt"] . "' WHERE `posts`.`id` = '" . $id . "';";
         $statement =  $this->__conn->prepare($sql);
 
         $result = $statement->execute();
@@ -63,7 +63,6 @@ class PostModel
         $statement = $this->__conn->prepare($sql);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_OBJ);
-
         return $result;
     }
 }
