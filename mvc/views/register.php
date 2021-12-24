@@ -11,19 +11,25 @@
 <body>
     <form class="form-login" id="main" action="/post-register" method="post" novalidate>
         <div>
-        <?php echo !empty($errors) ? "<h3 style=\"color: red; text-align: center;\">" . $msg . "</h3>" : false; ?>
+            <?php echo !empty($fail) ? "<h3 style=\"color: red; text-align: center;\">" . $fail . "</h3>" : false; ?>
+
+            <?php echo !empty($errors) ? "<h3 style=\"color: red; text-align: center;\">" . $msg . "</h3>" : false; ?>
 
             <h3 class="title">CREATE YOUR ACCOUNT</h3>
             <div class="form-group">
                 <label for="use" class="form-label">Username</label>
-                <input type="text" name="username" id="usernames" class="form-control" placeholder="Username">
+                <input type="text" name="username" id="usernames" class="form-control" placeholder="Username" value="<?php if (!empty($errors)) {
+                                                                                                                            echo $_POST["username"];
+                                                                                                                        } ?>">
                 <?php echo (!empty($errors) && array_key_exists("username", $errors)) ? "<div class=\"messages\">" . $errors["username"] . "</div>" : false; ?>
                 <div class="messages"></div>
             </div>
 
             <div class="form-group">
                 <label for="user" class="form-label">Email:</label>
-                <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+                <input type="email" name="email" id="email" class="form-control" placeholder="Email" value="<?php if (!empty($errors)) {
+                                                                                                                            echo $_POST["email"];
+                                                                                                                        } ?>">
                 <?php echo (!empty($errors) && array_key_exists("email", $errors)) ? "<div class=\"messages\">" . $errors["email"] . "</div>" : false; ?>
                 <div class="messages"></div>
             </div>

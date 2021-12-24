@@ -18,7 +18,6 @@ class Route{
                 }
             }
         }
-        
         return $handleUrl;
     }
 }
