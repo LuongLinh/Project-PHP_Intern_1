@@ -13,7 +13,7 @@ class LoginRequest extends Request
             "username.min" => "Username must be at least 3 characters long",
             "username.max" => "username must be less than 30 characters",
 
-            "password.required" => "Password cant be blank",
+            "password.required" => "Password can't be blank",
             "password.min" => "Password must be at least than 6 characters",
         ]);
 

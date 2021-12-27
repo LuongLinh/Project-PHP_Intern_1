@@ -10,12 +10,11 @@ class UserController extends Controller
 
     public function postLogin()
     {
-
         $loginRequest = new LoginRequest();
         $validateLogin = $loginRequest->validateLogin();
 
         if (!$validateLogin) {
-            $this->data['errors'] = $loginRequest->errors();
+            $this->data["errors"] = $loginRequest->errors();
             $this->data["msg"] = "Login fail! Please check again!";
         }
 
@@ -25,11 +24,9 @@ class UserController extends Controller
             $users = $this->model("UserModel");
             if ($users->userLogin($loginRequest->getFields())) {
                 $_SESSION["logined"] = true;
-
-                return $this->getUserById($_SESSION["id"]);
+                $this->apiSuccessResponse($loginRequest->getFields());
             } else {
-                $loginFail = "Login fail! Please login again!";
-                return $this->render("login", ["loginFail" => $loginFail]);
+                $this->apiErrorResponse("Login fail! Please login again!", 422);
             }
         }
     }
@@ -46,7 +43,7 @@ class UserController extends Controller
         $validateRegistration = $registerRequest->validateRegister();
 
         if (!$validateRegistration) {
-            $this->data['errors'] = $registerRequest->errors();
+            $this->data["errors"] = $registerRequest->errors();
             $this->data["msg"] = "Something wrong! Please check again!";
         }
 
@@ -56,11 +53,9 @@ class UserController extends Controller
             $users = $this->model("UserModel");
             $register = $users->userRegistration($registerRequest->getFields());
             if ($register) {
-                $success = "Create account successfully";
-                return $this->render("login", ["success" => $success]);
+                $this->apiSuccessResponse($registerRequest->getFields());
             } else {
-                $fail = "Registration fail! Please try again!";
-                return $this->render("register", ["fail" => $fail]);
+                $this->apiErrorResponse("Something wrong! Please check again!", 422);
             }
         }
     }
@@ -77,14 +72,15 @@ class UserController extends Controller
         if (!empty($_SESSION["id"]) && $userId == $_SESSION["id"]) {
             $users = $this->model("UserModel");
             if (!$users->isUser($userId)) {
-                $users = $this->model("UserModel");
                 $userDetail = $users->getUserById($userId);
                 if (!empty($userDetail)) {
                     $posts = $this->model("PostModel");
                     $listPostOfAuthor = $posts->getPostofAuthor($userId);
                     $arrayPostOfAuthor = json_decode(json_encode($listPostOfAuthor), true);
                 }
+
                 return $this->render("userDetail", ["users" => $userDetail, "postOfAuthor" => $arrayPostOfAuthor]);
+
             } else return $this->render("errors");
         } else {
             return $this->render("errors");
