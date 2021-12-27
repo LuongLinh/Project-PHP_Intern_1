@@ -19,7 +19,7 @@ class PostModel
 
     public function getListPost()
     {
-        $sql = "SELECT * FROM `posts`";
+        $sql = "SELECT * FROM `posts` ORDER BY `posts`.`id` DESC";
         $statement = $this->__conn->prepare($sql);
         $statement->setFetchMode(PDO::FETCH_ASSOC);
 
@@ -30,7 +30,7 @@ class PostModel
 
     public function getPostById($id)
     {
-        $sql = "SELECT `posts`.`id`, `title`, `content`, `message` FROM `posts`, `comments` WHERE `posts`.`id` = `comments`.`post_id` AND `posts`.`id` = '" . $id . "';";
+        $sql = "SELECT `posts`.`id`, `title`, `content`, `message` FROM `posts` INNER JOIN `comments` ON `posts`.`id` = `comments`.`post_id` WHERE `posts`.`id` = '" . $id . "';";
         $statement = $this->__conn->prepare($sql);
         $statement->setFetchMode(PDO::FETCH_ASSOC);
         $statement->execute();
@@ -58,8 +58,11 @@ class PostModel
 
     function getPostofAuthor($authorId)
     {
-        $sql = "SELECT `posts`.`id`, `username`, `email`, `title`, `content`, `timestamp` FROM `posts` LEFT JOIN  `users` ON `users`.`id` = `posts`.`user_author_id` 
-        WHERE `posts`.`user_author_id` = " . $authorId . ";";
+        $sql = "SELECT `posts`.`id`, `username`, `email`, `title`, `content`, `timestamp` 
+        FROM `posts`
+        LEFT JOIN  `users` ON `users`.`id` = `posts`.`user_author_id` 
+        WHERE `posts`.`user_author_id` = $authorId
+        ORDER BY `posts`.`id` DESC;";
         $statement = $this->__conn->prepare($sql);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_OBJ);

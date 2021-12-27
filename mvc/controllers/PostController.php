@@ -3,19 +3,15 @@ class PostController extends Controller
 {
     function addPost($userId)
     {
-        if (isset($_SESSION["id"]) && !empty($_SESSION["id"])) {
-            $user = $this->model("UserModel");
-            $user->userLogin();
+        $postData = $this->getFields();
 
-            $postData = $this->getFields();
-
+        if (isset($postData) && !empty($postData)) {
             $posts = $this->model("PostModel");
             $posts->addPost($postData, $userId);
 
-            return $this->getListPost();
-        } else if (empty($_SESSION["id"])) {
-            $this->data["msgLoginToPost"] = "You must log in before";
-            return $this->render("login",$this->data);
+            $this->apiSuccessResponse(["data" => $postData, "id" => $userId]);
+        } else {
+            $this->apiErrorResponse("Please fill in the title and content!", 422);
         }
     }
 
@@ -33,7 +29,7 @@ class PostController extends Controller
         if (!empty($postDetail)) {
             return $this->render("postDetail", ["postDetail" => $postDetail]);
         } else {
-           return $this->render("errors");
+            return $this->render("errors");
         }
     }
 

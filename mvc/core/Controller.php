@@ -24,14 +24,27 @@ class Controller extends Request
         return false;
     }
 
-    // public function getFields()
-    // {
-    //     return $this->getFields();
-    // }
-    // public function getRule() {
-    //     return $this->rules();
-    // }
-    // public function getMessage() {
-    //     return $this->getMessage();
-    // }
+    public function apiSuccessResponse($data)
+    {
+        header('Content-Type: application/json; charset=utf-8', true, 200);
+        
+        if (isset($data)) {
+            echo json_encode($data);
+        } else {
+            echo json_encode(["message" => "success"]);
+        }
+
+        die;
+    } 
+
+    public function apiErrorResponse($errorMessages = "Server error", $statusCode = 500)
+    {
+        header('Content-Type: application/json; charset=utf-8', true, $statusCode);
+
+        echo json_encode([
+            "errors" => $errorMessages
+        ]);
+
+        die;
+    }
 }
