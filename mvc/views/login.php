@@ -26,8 +26,8 @@
             <div class="form-group">
                 <label for="use" class="form-label">Username</label>
                 <input type="text" name="username" id="username" class="form-control" placeholder="Username" value="<?php if (!empty($errors) && isset($_POST["username"])) {
-                                                                                                                            echo $_POST["username"];
-                                                                                                                        } ?>">
+                                                                                                                        echo $_POST["username"];
+                                                                                                                    } ?>">
                 <?php echo (!empty($errors) && array_key_exists("username", $errors)) ? "<div class=\"messages\">" . $errors["username"] . "</div>" : false; ?>
                 <div class="messages"></div>
             </div>
@@ -54,7 +54,7 @@
 
     <script src="../node_modules/validate.js/validate.js"></script>
     <script src="../js/login.js"></script>
-    <script src="../assets/js/checkLogin.js" ></script>
+    <script src="../assets/js/checkLogin.js"></script>
 </body>
 
 </html>

@@ -22,13 +22,36 @@ class UserController extends Controller
             return $this->render("login", $this->data);
         } else {
             $users = $this->model("UserModel");
-            if ($users->userLogin($loginRequest->getFields())) {
-                $_SESSION["logined"] = true;
+            $loginData = $loginRequest->getFields();
+            if ($users->userLogin($loginData)) {
+                $_SESSION["username"] = $loginData["username"];
+                $_SESSION["loggedin_time"] = time();
+
                 $this->apiSuccessResponse($loginRequest->getFields());
             } else {
                 $this->apiErrorResponse("Login fail! Please login again!", 422);
             }
         }
+    }
+
+    //register
+    public function checkUser()
+    {
+        if(isset($_SESSION["id"]) && isset($_SESSION["loggedin_time"])) {
+            if((time() - $_SESSION["loggedin_time"]) > 3600) {
+                echo "logout";
+            }
+        } 
+    }
+
+    public function logout()
+    {
+        session_destroy();
+        unset($_SESSION["loggedin_time"]);
+        unset($_SESSION["id"]);
+        unset($_SESSION["username"]);
+        return $this->render("login");
+        die;
     }
 
     //register
@@ -53,6 +76,7 @@ class UserController extends Controller
             $users = $this->model("UserModel");
             $register = $users->userRegistration($registerRequest->getFields());
             if ($register) {
+
                 $this->apiSuccessResponse($registerRequest->getFields());
             } else {
                 $this->apiErrorResponse("Something wrong! Please check again!", 422);
@@ -80,7 +104,6 @@ class UserController extends Controller
                 }
 
                 return $this->render("userDetail", ["users" => $userDetail, "postOfAuthor" => $arrayPostOfAuthor]);
-
             } else return $this->render("errors");
         } else {
             return $this->render("errors");

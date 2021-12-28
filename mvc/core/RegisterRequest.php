@@ -8,7 +8,7 @@ class RegisterRequest extends Request
             "username" => "required|min:3|max:30",
             "email" => "required|email|min:5",
             "password" => "required|min:6",
-            "confirm-password" => "required|min:6|match:password"
+            "conPassword" => "required|min:6|match:password"
         ]);
 
         $this->message([
@@ -20,9 +20,9 @@ class RegisterRequest extends Request
             "email.min" => "Email must be at least 5 characters long",
             "password.required" => "Password cant be blank",
             "password.min" => "Password must be at least than 6 characters",
-            "confirm-password.required" => "Confirm password cant be blank",
-            "confirm-password.min" => "Password must be at least than 5 characters",
-            "confirm-password.match" => "Confirm Password should match with the Password"
+            "conPassword.required" => "Confirm password cant be blank",
+            "conPassword.min" => "Password must be at least than 5 characters",
+            "conPassword.match" => "Confirm Password should match with the Password"
         ]);
         return $this->validate();
     }

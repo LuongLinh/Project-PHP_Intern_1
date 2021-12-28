@@ -46,8 +46,8 @@
 
             <div class="form-group">
                 <label for="conpassword" class="form-label">Confirm password</label>
-                <input type="password" name="confirm-password" id="conpassword" class="form-control">
-                <?php echo (!empty($errors) && array_key_exists("confirm-password", $errors)) ? "<div class=\"messages\">" . $errors["confirm-password"] . "</div>" : false; ?>
+                <input type="password" name="conpassword" id="conpassword" class="form-control">
+                <?php echo (!empty($errors) && array_key_exists("conpassword", $errors)) ? "<div class=\"messages\">" . $errors["conpassword"] . "</div>" : false; ?>
                 <div class="messages"></div>
             </div>
 

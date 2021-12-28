@@ -8,6 +8,9 @@ $routes["post-login"] = "UserController/postLogin";
 $routes["list-user"] = "usercontroller/getListUser";
 $routes["delete-user/(.+)"] = "usercontroller/deleteUser/$1";
 $routes["update-user/(.+)"] = "usercontroller/updateUser/$1";
+$routes["logout"] = "usercontroller/logout";
+
+$routes["check-user"] = "usercontroller/checkUser";
 //test route
 $routes["news/.+?-(\d+).html"] = "news/testRoute/$1";
 $routes["user-detail/(.+)"] = "usercontroller/getUserById/$1";

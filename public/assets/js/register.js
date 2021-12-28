@@ -22,7 +22,7 @@
                 minimum: 5
             }
         },
-        "confirm-password": {
+        "conPassword": {
             presence: true,
             equality: {
                 attribute: "password",
