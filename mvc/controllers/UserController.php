@@ -67,8 +67,6 @@ class UserController extends Controller
         if (!empty($this->data["errors"])) {
             $_SESSION["message"] = $this->data["errors"];
             redirect("register");
-            // $_SESSION["mession"] = $this->data["errors"];
-            // return $this->render("register", $this->data);
         } else {
             $users = $this->model("UserModel");
             $register = $users->userRegistration($registerRequest->getFields());
