@@ -4,8 +4,7 @@ class CommentModel
 
     function __construct()
     {
-        global $db_config;
-        $this->__conn = Connection::getInstance($db_config);
+        $this->__conn = Connection::getInstance();
     }
 
     function addComment($commentData, $userId, $postId)

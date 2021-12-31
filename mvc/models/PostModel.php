@@ -5,8 +5,7 @@ class PostModel
     public $__conn;
     function __construct()
     {
-        global $db_config;
-        $this->__conn = Connection::getInstance($db_config);
+        $this->__conn = Connection::getInstance();
     }
 
     public function addPost($postData, $userId)
@@ -30,7 +29,7 @@ class PostModel
 
     public function getPostById($id)
     {
-        $sql = "SELECT `posts`.`id`, `title`, `content`, `message` FROM `posts` INNER JOIN `comments` ON `posts`.`id` = `comments`.`post_id` WHERE `posts`.`id` = '" . $id . "';";
+        $sql = "SELECT `posts`.`id`, `title`, `content`, `message` FROM `posts` LEFT JOIN `comments` ON `posts`.`id` = `comments`.`post_id` WHERE `posts`.`id` = '" . $id . "';";
         $statement = $this->__conn->prepare($sql);
         $statement->setFetchMode(PDO::FETCH_ASSOC);
         $statement->execute();

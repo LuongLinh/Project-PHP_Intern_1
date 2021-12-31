@@ -19,22 +19,4 @@ $("#btn-submit").on("click", function() {
         error.html("Confirm Password should match with the Password");
         return false;
     }
-
-    $.ajax({
-            url: "post-register",
-            method: "post",
-            dataType: "json",
-            data: {
-                username: username,
-                email: email,
-                password: password,
-                conPassword: conPassword,
-            },
-        })
-        .then((response) => {
-            ok.html("Create account successfully!");
-        })
-        .catch((error) => {
-            $("#error").html("Something wrong! Please login again!");
-        });
 });

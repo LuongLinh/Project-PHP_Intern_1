@@ -10,9 +10,10 @@
 </head>
 
 <body>
-    <form class="form-login" id="main" action="" method="post" novalidate>
+
+    <form class="form-login" id="main" action="../post-register" method="post" novalidate>
         <div>
-            <?php echo !empty($fail) ? "<h3 style=\"color: red; text-align: center;\">" . $fail . "</h3>" : false; ?>
+            <?php echo (!empty($fail) && isset($fail)) ? "<h3 style=\"color: red; text-align: center;\">" . $fail . "</h3>" : false; ?>
 
             <?php echo !empty($errors) ? "<h3 style=\"color: red; text-align: center;\">" . $msg . "</h3>" : false; ?>
 
@@ -23,9 +24,11 @@
             <div class="form-group">
                 <label for="use" class="form-label">Username</label>
                 <input type="text" name="username" id="username" class="form-control" placeholder="Username" value="<?php if (!empty($errors) && isset($_POST["username"])) {
-                                                                                                                            echo $_POST["username"];
-                                                                                                                        } ?>">
-                <?php echo (!empty($errors) && array_key_exists("username", $errors)) ? "<div class=\"messages\">" . $errors["username"] . "</div>" : false; ?>
+                                                                                                                        echo $_POST["username"];
+                                                                                                                    } ?>">
+                <?php echo isset($_SESSION['message']["username"]) ? "<div class=\"messages\">" . $_SESSION['message']["username"] . "</div>" : false;
+                unset($_SESSION['message']["username"]) ?>
+
                 <div class="messages"></div>
             </div>
 
@@ -34,20 +37,23 @@
                 <input type="email" name="email" id="email" class="form-control" placeholder="Email" value="<?php if (!empty($errors) && isset($_POST["email"])) {
                                                                                                                 echo $_POST["email"];
                                                                                                             } ?>">
-                <?php echo (!empty($errors) && array_key_exists("email", $errors)) ? "<div class=\"messages\">" . $errors["email"] . "</div>" : false; ?>
+                <?php echo isset($_SESSION['message']["email"]) ? "<div class=\"messages\">" . $_SESSION['message']["email"] . "</div>" : false;
+                unset($_SESSION['message']["email"]) ?>
                 <div class="messages"></div>
             </div>
             <div class="form-group">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" name="password" id="password" class="form-control">
-                <?php echo (!empty($errors) && array_key_exists("password", $errors)) ? "<div class=\"messages\">" . $errors["password"] . "</div>" : false; ?>
+                <?php echo isset($_SESSION['message']["password"]) ? "<div class=\"messages\">" . $_SESSION['message']["password"] . "</div>" : false;
+                unset($_SESSION['message']["password"]) ?>
                 <div class="messages"></div>
             </div>
 
             <div class="form-group">
-                <label for="conpassword" class="form-label">Confirm password</label>
-                <input type="password" name="confirm-password" id="conpassword" class="form-control">
-                <?php echo (!empty($errors) && array_key_exists("confirm-password", $errors)) ? "<div class=\"messages\">" . $errors["confirm-password"] . "</div>" : false; ?>
+                <label for="conPassword" class="form-label">Confirm password</label>
+                <input type="password" name="conPassword" id="conPassword" class="form-control">
+                <?php echo isset($_SESSION['message']["conPassword"]) ? "<div class=\"messages\">" . $_SESSION['message']["conPassword"] . "</div>" : false;
+                unset($_SESSION['message']["conPassword"]) ?>
                 <div class="messages"></div>
             </div>
 
@@ -62,7 +68,6 @@
 
     <script src="../node_modules/validate.js/validate.js"></script>
     <script src="../js/register.js"></script>
-    <script src="../assets/js/checkRegister.js" ></script>
 </body>
 
 </html>

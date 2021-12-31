@@ -20,9 +20,11 @@ $("#btn-submit").on("click", function() {
             data: { username: username, password: password },
         })
         .then((response) => {
-            ok.html("Login successfully!");
+
+            ok.html("Login succesfully!");
         })
         .catch((error) => {
+            console.log(error);
             $("#error").html("Login fail! Please login again!");
         });
 });

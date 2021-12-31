@@ -25,12 +25,8 @@ class PostController extends Controller
     function getPostById($id)
     {
         $posts = $this->model("PostModel");
-        $postDetail =  $posts->getPostById($id);
-        if (!empty($postDetail)) {
-            return $this->render("postDetail", ["postDetail" => $postDetail]);
-        } else {
-            return $this->render("errors");
-        }
+        $postDetail = $posts->getPostById($id);
+        return $this->render("postDetail", ["postDetail" => $postDetail]);
     }
 
     function editPost($id)
@@ -57,6 +53,6 @@ class PostController extends Controller
         $posts = $this->model("PostModel");
         $posts->deletePost($id);
         $listPost = $posts->getListPost();
-        return $this->render("listPost", ["listPost" => $listPost]);
+        redirect("list-post");
     }
 }

@@ -1,4 +1,13 @@
 <?php
+session_set_cookie_params(3600,"/");
+session_start();
+
+if(!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+    $web_root = 'https://'.$_SERVER['HTTP_HOST'];
+} else {
+    $web_root = 'http://'.$_SERVER['HTTP_HOST'];
+}
+define('_WEB_ROOT', $web_root);
 
 $config_dir = scandir("../mvc/config");
 
@@ -10,15 +19,11 @@ if (!empty($config_dir)) {
     }
 }
 require_once "../mvc/core/Route.php";
+require_once "../mvc/middlewares/MiddlewareInterface.php";
 require_once "../mvc/core/App.php";
 
-if (!empty($config["database"])) {
-    $db_config = array_filter($config["database"]);
+require_once "../mvc/core/Connection.php";
 
-    if (!empty($db_config)) {
-        require_once "../mvc/core/Connection.php";
-    }
-}
 require_once "../mvc/core/Request.php";
 require_once "../mvc/core/LoginRequest.php";
 require_once "../mvc/core/RegisterRequest.php";

@@ -41,8 +41,6 @@ class UserModel
             $sqlRegister = "INSERT INTO `users` (`id`, `username`, `email`, `password`) VALUES (NULL, '" . $userData["username"] . "', '" . $userData["email"] . "', '" . $userData["password"] . "');";
             $sttm = $this->__conn->prepare($sqlRegister);
             $sttm->execute(["username" => $userData["username"], "email" => $userData["email"]]);
-            $uid = $this->__conn->lastInsertId();
-            $_SESSION["id"] = $uid;
             return true;
         }
         return false;

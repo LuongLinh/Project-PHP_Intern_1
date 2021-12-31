@@ -92,3 +92,9 @@ body {
     text-decoration: none;
     color: #052f77;
 }
+
+.avt-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
