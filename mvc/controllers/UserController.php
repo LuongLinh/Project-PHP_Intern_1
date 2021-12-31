@@ -8,6 +8,10 @@ class UserController extends Controller
         $this->render("login");
     }
 
+    public function varSS()
+    {
+        var_dump($_SESSION);
+    }
     public function postLogin()
     {
         $loginRequest = new LoginRequest();
@@ -19,38 +23,28 @@ class UserController extends Controller
         }
 
         if (!empty($this->data["errors"])) {
-            return $this->render("login", $this->data);
+            $_SESSION["message"] = $this->data["errors"];
+            redirect("login");
         } else {
             $users = $this->model("UserModel");
             $loginData = $loginRequest->getFields();
             if ($users->userLogin($loginData)) {
                 $_SESSION["username"] = $loginData["username"];
-                $_SESSION["loggedin_time"] = time();
-
-                $this->apiSuccessResponse($loginRequest->getFields());
+                $_SESSION["isLoggedIn"] = true;
+                $url = "user-detail/".$_SESSION["id"]."" ;
+                redirect($url);
             } else {
-                $this->apiErrorResponse("Login fail! Please login again!", 422);
+                $loginFail = "Login fail! Please login again!";
+                return $this->render("login", ["loginFail" => $loginFail]);
             }
         }
     }
 
-    //register
-    public function checkUser()
-    {
-        if(isset($_SESSION["id"]) && isset($_SESSION["loggedin_time"])) {
-            if((time() - $_SESSION["loggedin_time"]) > 3600) {
-                echo "logout";
-            }
-        } 
-    }
-
+    //logout
     public function logout()
     {
         session_destroy();
-        unset($_SESSION["loggedin_time"]);
-        unset($_SESSION["id"]);
-        unset($_SESSION["username"]);
-        return $this->render("login");
+        redirect("login");
         die;
     }
 
@@ -71,15 +65,18 @@ class UserController extends Controller
         }
 
         if (!empty($this->data["errors"])) {
-            return $this->render("register", $this->data);
+            $_SESSION["message"] = $this->data["errors"];
+            redirect("register");
+            // $_SESSION["mession"] = $this->data["errors"];
+            // return $this->render("register", $this->data);
         } else {
             $users = $this->model("UserModel");
             $register = $users->userRegistration($registerRequest->getFields());
             if ($register) {
-
-                $this->apiSuccessResponse($registerRequest->getFields());
+               redirect("login");
             } else {
-                $this->apiErrorResponse("Something wrong! Please check again!", 422);
+                $fail = "Registration fail! Please try again!";
+                return $this->render("register", ["fail" => $fail]);
             }
         }
     }
@@ -93,7 +90,6 @@ class UserController extends Controller
 
     function getUserById($userId)
     {
-        if (!empty($_SESSION["id"]) && $userId == $_SESSION["id"]) {
             $users = $this->model("UserModel");
             if (!$users->isUser($userId)) {
                 $userDetail = $users->getUserById($userId);
@@ -105,9 +101,7 @@ class UserController extends Controller
 
                 return $this->render("userDetail", ["users" => $userDetail, "postOfAuthor" => $arrayPostOfAuthor]);
             } else return $this->render("errors");
-        } else {
-            return $this->render("errors");
-        }
+        
     }
 
     function deleteUser($id)

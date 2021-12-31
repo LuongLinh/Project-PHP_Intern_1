@@ -1,0 +1,13 @@
+{
+    "require-dev": {
+        "symfony/var-dumper": "^5.4"
+    },
+    "autoload": {
+        "files": [
+            "helper/Helper.php"
+        ]
+    },
+    "require": {
+        "vlucas/phpdotenv": "^5.4"
+    }
+}

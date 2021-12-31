@@ -11,7 +11,7 @@
 <body>
     <div class="container">
         <h3>MY ACCOUNT</h3>
-
+        <a href="../logout">Logout</a>
         <div>
             <?php
             if (!empty($data["users"]) && isset($data["users"])) {
@@ -34,7 +34,7 @@
 
             <!-- add post -->
             <form action="/add-post/<?php echo $value["id"]; ?>" method="post">
-            <h3 id="error" style="color: red; font-family: monospace;"> </h3>
+                <h3 id="error" style="color: red; font-family: monospace;"> </h3>
 
                 <div class="form-group">
                     <input type="text" name="title" id="title" class="form-control" placeholder="Title">

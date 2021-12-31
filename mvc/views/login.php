@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <form class="form-login" id="main" action="post-login" method="post" novalidate>
+    <form class="form-login" id="main" action="../post-login" method="post" novalidate>
         <div>
             <?php echo !empty($data["msgLoginToPost"]) ? "<h3 style=\"color: red; text-align: center;\">" . $msgLoginToPost . "</h3>" : false; ?>
 
@@ -28,14 +28,17 @@
                 <input type="text" name="username" id="username" class="form-control" placeholder="Username" value="<?php if (!empty($errors) && isset($_POST["username"])) {
                                                                                                                         echo $_POST["username"];
                                                                                                                     } ?>">
-                <?php echo (!empty($errors) && array_key_exists("username", $errors)) ? "<div class=\"messages\">" . $errors["username"] . "</div>" : false; ?>
+                <?php echo isset($_SESSION['message']["username"]) ? "<div class=\"messages\">" . $_SESSION['message']["username"] . "</div>" : false;
+                unset($_SESSION['message']["username"]) ?>
+
                 <div class="messages"></div>
             </div>
 
             <div class="form-group">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" name="password" id="password" class="form-control">
-                <?php echo (!empty($errors) && array_key_exists("password", $errors)) ? "<div class=\"messages\">" . $errors["password"] . "</div>" : false; ?>
+                <?php echo isset($_SESSION['message']["password"]) ? "<div class=\"messages\">" . $_SESSION['message']["password"] . "</div>" : false;
+                unset($_SESSION['message']["password"]) ?>
                 <div class="messages"></div>
             </div>
             <div class="form-group">
@@ -54,7 +57,6 @@
 
     <script src="../node_modules/validate.js/validate.js"></script>
     <script src="../js/login.js"></script>
-    <script src="../assets/js/checkLogin.js"></script>
 </body>
 
 </html>

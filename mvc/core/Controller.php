@@ -27,7 +27,7 @@ class Controller extends Request
     public function apiSuccessResponse($data)
     {
         header('Content-Type: application/json; charset=utf-8', true, 200);
-        
+
         if (isset($data)) {
             echo json_encode($data);
         } else {
@@ -35,7 +35,7 @@ class Controller extends Request
         }
 
         die;
-    } 
+    }
 
     public function apiErrorResponse($errorMessages = "Server error", $statusCode = 500)
     {
