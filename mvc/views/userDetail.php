@@ -11,7 +11,9 @@
 <body>
     <div class="container">
         <h3>MY ACCOUNT</h3>
-        <a href="../logout">Logout</a>
+        <a href="../logout">LOGOUT</a>
+        <br />
+
         <div>
             <?php
             if (!empty($data["users"]) && isset($data["users"])) {
@@ -22,6 +24,15 @@
             ?>
             <!-- user info -->
             <div>
+                <a href="../get-user/<?php echo $value["id"]; ?>">
+
+                    <?php
+                    if (!empty($value['image_url'])) {
+                        echo "<img src=\"" . $value["image_url"] . "\" id=\"image\" class=\"img-avt\" style=\"width: 150px; height : 150px; border-radius: 50%\" alt=\"avt-image\">";
+                    } else {
+                        echo "<img src=\"../assets/images/default.jpg\" id=\"image\" class=\"img-avt\" style=\"width: 150px; height : 150px; border-radius: 50%\" alt=\"avt-image\">";
+                    } ?>
+                </a>
                 <p class="author"> Username: <?php if (isset($value["username"])) {
                                                     echo ($value["username"]);
                                                 } ?>
@@ -65,12 +76,12 @@
                     $key = array_filter($data["postOfAuthor"]);
 
                     echo "
-                <div id=\"show-post\">
-                    <a href=\"../post-detail/" . $postValue["id"] . "\" class=\"post-title\" >
-                        " . $postValue["title"] . " </a>  
-                    <p class=\"post-content\" id=\"show-content\">" . $postValue["content"] . "</p>
-                    <button class=\"btn-submit btn-showComment\" post-id='" . $postValue["id"] . "' type=\"button\">Comment</button>
-                </div>";
+                    <div id=\"show-post\">
+                        <a href=\"../post-detail/" . $postValue["id"] . "\" class=\"post-title\" >
+                            " . $postValue["title"] . " </a>  
+                        <p class=\"post-content\" id=\"show-content\">" . $postValue["content"] . "</p>
+                        <button class=\"btn-submit btn-showComment\" post-id='" . $postValue["id"] . "' type=\"button\">Comment</button>
+                    </div>";
                     // comment
                     echo "
                     <form action=\"/add-comment/" . $value["id"] . "/" . $postValue["id"] . " \" method=\"post\" class=\"form-comment\" form-comment=\"" . $postValue["id"] . "\">

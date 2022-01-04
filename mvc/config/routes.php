@@ -8,15 +8,27 @@ $routes["post-login"] = "usercontroller/postLogin";
 
 $routes["list-user"] = "usercontroller/getListUser";
 
-$routes["delete-user/(.+)"] = "usercontroller/deleteUser/$1";
-$routes["update-user/(.+)"] = "usercontroller/updateUser/$1";
-$routes["logout"] = "usercontroller/logout";
+$routes["delete-user/(.+)"] = [
+    "action" => "usercontroller/deleteUser/$1",
+    "middlewares" => "checklogin"
+];
+$routes["update-user/(.+)"] = [
+    "action" => "usercontroller/updateUser/$1",
+    "middlewares" => "checklogin"
+];
+$routes["logout"] = [
+    "action" => "usercontroller/logout",
+    "middlewares" => "checklogin"
+];
 
 $routes["user-detail/(.+)"] = [
     "action" => "usercontroller/getUserById/$1",
     "middlewares" => "checklogin"
 ];
-
+$routes["get-user/(.+)"] = [
+    "action" => "usercontroller/getUserId/$1",
+    "middlewares" => "checklogin"
+];
 //post
 $routes["add-post/(.+)"] = [
     "action" => "postcontroller/addPost/$1",
@@ -26,7 +38,12 @@ $routes["add-post/(.+)"] = [
     ]
 ];
 
-$routes["post-detail/(.+)"] = "postcontroller/getPostById/$1";
+$routes["post-detail/(.+)"] = [
+    "action" => "postcontroller/getPostById/$1",
+    "middlewares" => [
+        "checklogin"
+    ]
+];
 $routes["edit-post/(.+)"] = [
     "action" => "postcontroller/editPost/$1",
     "middlewares" => "checklogin"
