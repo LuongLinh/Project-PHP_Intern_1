@@ -29,8 +29,6 @@ $routes["get-user/(.+)"] = [
     "action" => "usercontroller/getUserId/$1",
     "middlewares" => "checklogin"
 ];
-
-$routes["upload-img/(.+)"] = "usercontroller/checkImage/$1";
 //post
 $routes["add-post/(.+)"] = [
     "action" => "postcontroller/addPost/$1",

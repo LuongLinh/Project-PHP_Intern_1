@@ -117,58 +117,66 @@ class UserController extends Controller
 
     function updateUser($id)
     {
-
         $updateData = $this->getFields();
-        $users = $this->model("UserModel");
-        
-        $target_dir = "../assets/images/";
-        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+        $checkImage = $this->checkImage($id);
 
-        $users->updateUser($updateData, $id);
-        $this->checkImage($id);
-        return $this->apiSuccessResponse(["image_url" => $target_file, "user" => $users]);
+        if ($checkImage["status"]) {
+            $users = $this->model("UserModel");
+            $users->updateUser($updateData, $id);
+            $this->apiSuccessResponse(["image_url" => $checkImage["image_url"]]);
+        } else {            
+            $this->apiErrorResponse($checkImage["msg"]);
+        }
     }
 
     public function checkImage($id)
     {
+        $result = ["status" => true];
+        
         $target_dir = "../assets/images/";
-        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-        $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-        $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-        if ($check !== false) {
-            $uploadOk = 1;
-        } else {
-            $uploadOk = 0;
+        if (!file_exists($target_dir)) {
+            mkdir("../assets/images/", 0777, true);
         }
 
-        if (file_exists($target_file)) {
-            $uploadOk = 0;
+        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+        if (empty($_FILES["fileToUpload"]["tmp_name"])
+            || getimagesize($_FILES["fileToUpload"]["tmp_name"]) == false
+        ) {
+            $result = [
+                "status" => false,
+                "msg" => "File is not an image"
+            ];
+        }
+
+        if (!in_array($imageFileType, config("imageFileTypeAllow.imageTypeAllow"))) {
+            $result = [
+                "status" => false,
+                "msg" => "Only JPG, JPEG, PNG & GIF files are allowed."
+            ];
         }
 
         if ($_FILES["fileToUpload"]["size"] > 5000000) {
-            $uploadOk = 0;
+            $result = [
+                "status" => false,
+                "msg" => "Your file too large"
+            ];
         }
 
-        if (
-            $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-            && $imageFileType != "gif"
-        ) {
-            $uploadOk = 0;
-        }
-
-        if ($uploadOk == 0) {
-            $msg = "Sorry, your file was not uploaded.";
-            return $this->apiErrorResponse($msg);
-        } else {
-            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], 'uploads/' . $target_file)) {
+        if ($result["status"]) {
+            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
                 $users = $this->model("UserModel");
-                return $users->uploadImage($target_file, $id);
+                $users->uploadImage($target_file, $id);
+                $result = [
+                    "status" => true,
+                    "image_url" => $target_file
+                ];
             } else {
-                $msg = "Sorry, there was an error uploading your file.";
-                return $this->apiErrorResponse($msg);
+                $result["msg"] = "your file can not upload";
             }
         }
+
+        return $result;
     }
 }

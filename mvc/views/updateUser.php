@@ -23,14 +23,14 @@
             <div>
                 <form id="form-upload" action="/update-user/<?php echo $value["id"]; ?>" method="post" enctype="multipart/form-data" user-id="<?php if (isset($value["id"])) {
                                                                                                                                                     echo $value["id"];
-                                                                                                                                                } ?>" class="form-upload" >
+                                                                                                                                                } ?>" >
                     <input type="file" name="fileToUpload" id="fileToUpload" class="image-profile">
                     <h3 id="uploadStatus" style="color: red; font-family: monospace;"> </h3>
                     <?php
                     if (!empty($value['image_url'])) {
-                        echo "<img src=\"" . $value["image_url"] . "\" id=\"image\" class=\"img-avt\" style=\"width: 150px; height : 150px; border-radius: 50%\" alt=\"avt-image\" >";
+                        echo "<img src=\"" . $value["image_url"] . "\" id=\"image\" class=\"img-avt\" style=\"width: 150px; height : 150px; border-radius: 50%\" alt= ".$value['username'].">";
                     } else {
-                        echo "<img src=\"../assets/images/default.jpg\" id=\"image\" class=\"img-avt\" style=\"width: 150px; height : 150px; border-radius: 50%\" alt=\"avt-image\">";
+                        echo "<img src=\"../assets/images/default.jpg\" id=\"image\" class=\"img-avt\" style=\"width: 150px; height : 150px; border-radius: 50%\" alt= ".$value['username'].">";
                     } ?>
 
                     <div class="form-group">
