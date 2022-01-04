@@ -58,7 +58,7 @@ class UserModel
         return $result;
     }
 
-    function updateUser($updateData, $id)
+    function updateUser($updateData,$id)
     {
         $sql = "UPDATE `users` SET `username` = '" . $updateData["username"] . "', `email` = '" . $updateData["email"] . "' WHERE `users`.`id` = " . $id . ";";
         $statement =  $this->__conn->prepare($sql);
@@ -84,7 +84,7 @@ class UserModel
 
     public function getUserById($id)
     {
-        $sql = "SELECT `id`, `username`, `email` FROM `users` WHERE `id`=" . $id . "";
+        $sql = "SELECT `id`, `username`, `email`, `image_url` FROM `users` WHERE `id`=" . $id . "";
         $statement = $this->__conn->prepare($sql);
         $statement->setFetchMode(PDO::FETCH_ASSOC);
 
@@ -93,6 +93,14 @@ class UserModel
         $count = $statement->rowCount();
 
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function uploadImage($image_url, $id)
+    {
+        $sql = "UPDATE `users` SET `image_url` = '" . $image_url . "' WHERE `users`.`id` = " . $id . ";";
+        $statement =  $this->__conn->prepare($sql);
+        $result = $statement->execute();
         return $result;
     }
 }
